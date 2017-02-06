@@ -24,7 +24,7 @@ rm -rf /usr/share/man/?? && \
 rm -rf /usr/share/man/??_*
 
 # disable sshd because if you're running ssh in a container you're doing it wrong
-sudo mv /etc/init/ssh.conf /etc/init/ssh.conf.disabled
+RUN mv /etc/init/ssh.conf /etc/init/ssh.conf.disabled
 
 # Set timezone
 RUN echo "Europe/London" > /etc/timezone && \
