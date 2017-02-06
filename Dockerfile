@@ -1,4 +1,4 @@
-FROM ubuntu:14.04.4
+FROM ubuntu:16.04
 MAINTAINER James Kirkby <jkirkby91@gmail.com>
 
 # Set some environment vars
@@ -12,7 +12,7 @@ RUN ln -sf /bin/true /sbin/initctl
 # install some global stuff
 RUN apt-get update && \
 apt-get upgrade -y && \
-apt-get install -y --force-yes --fix-missing build-essential apt-transport-https ca-certificates software-properties-common apparmor-utils libssl-dev nano language-pack-en-base gettext-base curl supervisor && \
+apt-get install -y --force-yes --fix-missing build-essential libgpgme11-dev libgpg-error-dev libassuan-dev apt-transport-https ca-certificates software-properties-common apparmor-utils libssl-dev nano language-pack-en-base gettext-base curl supervisor && \
 apt-add-repository multiverse  && \
 apt-get update && \
 apt-get autoremove -y && \
@@ -22,6 +22,9 @@ echo -n > /var/lib/apt/extended_states && \
 rm -rf /var/lib/apt/lists/* && \
 rm -rf /usr/share/man/?? && \
 rm -rf /usr/share/man/??_*
+
+# disable sshd because if you're running ssh in a container you're doing it wrong
+sudo mv /etc/init/ssh.conf /etc/init/ssh.conf.disabled
 
 # Set timezone
 RUN echo "Europe/London" > /etc/timezone && \
