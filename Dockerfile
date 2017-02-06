@@ -29,3 +29,7 @@ dpkg-reconfigure -f noninteractive tzdata
 
 # Copy supervisor config to container
 COPY confs/apparmour/supervisord.conf /etc/apparmour/supervisord.conf
+
+COPY confs/apparmour/abstractions/gconv-amd64 /etc/apparmour/abstractions/gconv-amd64
+
+COPY confs/apparmour/networkmanager.conf /etc/apparmour/networkmanager.conf
