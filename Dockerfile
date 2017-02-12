@@ -1,4 +1,5 @@
 FROM ubuntu:16.04
+
 MAINTAINER James Kirkby <jkirkby91@gmail.com>
 
 # Set some environment vars
@@ -15,7 +16,7 @@ RUN ln -sf /bin/true /sbin/initctl
 # install some global stuff
 RUN apt-get update && \
 apt-get upgrade -y && \
-apt-get install -y --force-yes --fix-missing build-essential wget libgpgme11-dev libgpg-error-dev libassuan-dev apt-transport-https ca-certificates software-properties-common apparmor-utils libssl-dev nano language-pack-en-base gettext-base curl supervisor && \
+apt-get install -y --force-yes --fix-missing build-essential wget curl fail2ban supervisor libgpg-error-dev libassuan-dev apt-transport-https ca-certificates software-properties-common apparmor-utils libssl-dev nano language-pack-en-base gettext-base && \
 apt-add-repository multiverse  && \
 apt-get update && \
 apt-get autoremove -y && \
@@ -26,6 +27,7 @@ rm -rf /var/lib/apt/lists/* && \
 rm -rf /usr/share/man/?? && \
 rm -rf /usr/share/man/??_*
 
+# gosu
 RUN set -x \
 	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
@@ -43,6 +45,8 @@ dpkg-reconfigure -f noninteractive tzdata
 # Copy supervisor config to container
 COPY confs/apparmour/supervisord.conf /etc/apparmour/supervisord.conf
 
+# add apparmor
 COPY confs/apparmour/abstractions/gconv-amd64 /etc/apparmour/abstractions/gconv-amd64
 
+# add apparmor
 COPY confs/apparmour/networkmanager.conf /etc/apparmour/networkmanager.conf
