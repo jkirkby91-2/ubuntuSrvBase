@@ -43,10 +43,10 @@ RUN echo "Europe/London" > /etc/timezone && \
 dpkg-reconfigure -f noninteractive tzdata
 
 # Copy supervisor config to container
-COPY confs/apparmor/supervisord.conf /etc/apparmor/supervisord.conf
+COPY confs/apparmor/supervisord.conf /etc/apparmor.d/supervisord.conf
 
 # add apparmor
-COPY confs/apparmor/abstractions/gconv-amd64 /etc/apparmor/abstractions/gconv-amd64
+COPY confs/apparmor/abstractions/gconv-amd64 /etc/apparmor.d/abstractions/gconv-amd64
 
 # add apparmor
-COPY confs/apparmor/networkmanager.conf /etc/apparmor/networkmanager.conf
+COPY confs/apparmor/networkmanager.conf /etc/apparmor.d/networkmanager.conf
