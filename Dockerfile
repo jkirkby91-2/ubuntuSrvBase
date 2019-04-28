@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-MAINTAINER James Kirkby <jkirkby91@gmail.com>
+MAINTAINER James Kirby <nshcore@protonmail.com>
 
 # Set some environment vars
 ENV TERM xterm
